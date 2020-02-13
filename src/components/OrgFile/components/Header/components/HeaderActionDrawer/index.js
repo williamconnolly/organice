@@ -34,6 +34,7 @@ export default class HeaderActionDrawer extends PureComponent {
       hasActiveClock,
       onShareHeader,
       onRefileHeader,
+      onRemoveHeader
     } = this.props;
 
     return (
@@ -48,7 +49,8 @@ export default class HeaderActionDrawer extends PureComponent {
           {this.iconWithFFClickCatcher({
             className: 'fas fa-edit fa-lg',
             onClick: onEnterDescriptionEditMode,
-            title: 'Edit header description',
+            title: '' +
+                'Edit header description',
             testId: 'edit-header-title',
           })}
 
@@ -122,12 +124,12 @@ export default class HeaderActionDrawer extends PureComponent {
             title: 'Refile this header to another header',
           })}
 
-          {/* Placeholder to align the other icons */}
-          {this.iconWithFFClickCatcher({
-            className: '',
-            onClick: () => {},
-            title: '',
-          })}
+        {this.iconWithFFClickCatcher({
+            className: 'fas fa-trash fa-lg',
+            onClick: onRemoveHeader,
+            testId: 'org-remove',
+            title: 'Delete this header',
+        })}
         </div>
       </div>
     );

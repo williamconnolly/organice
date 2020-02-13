@@ -41,6 +41,7 @@ class HeaderContent extends PureComponent {
       'handleInsertTimestamp',
       'handlePlanningItemTimestampClick',
       'handlePropertyListEdit',
+      'handleDoubleClick'
     ]);
 
     this.state = {
@@ -223,6 +224,11 @@ class HeaderContent extends PureComponent {
     this.props.base.activatePopup('property-list-editor', { headerId: header.get('id') });
   }
 
+  handleDoubleClick() {
+      this.props.org.openHeader(this.props.header.get('id'));
+      this.props.org.enterEditMode('description');
+  }
+
   render() {
     const {
       header,
@@ -241,6 +247,7 @@ class HeaderContent extends PureComponent {
       <div
         className="header-content-container nice-scroll"
         ref={this.handleRef}
+        onDoubleClick={this.handleDoubleClick}
         style={{ width: containerWidth }}
       >
         {inEditMode ? (
