@@ -1,5 +1,11 @@
 @import '../../colors.css';
 
+@media (min-width: 767px) {
+    .header-bar {
+        height: 50px;
+    }
+}
+
 .header-bar {
   background-color: var(--base2);
   height: 30px;
