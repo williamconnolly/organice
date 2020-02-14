@@ -107,8 +107,9 @@ class TitleLine extends PureComponent {
   }
 
   handleTitleDoubleClick() {
-      console.log('handling edit title click');
+    if (this.props.shouldDoubleTapToEdit) {
       this.props.org.enterEditMode('title');
+    }
   }
 
   handleTodoClick(event) {
@@ -140,13 +141,12 @@ class TitleLine extends PureComponent {
   handleTextareaFocus(event) {
     const { header } = this.props;
     const rawTitle = header.getIn(['titleLine', 'rawTitle']);
-    console.log('handling text area focus targeet', event.target);
     if (rawTitle === '') {
       const text = event.target.value;
       event.target.selectionStart = text.length;
       event.target.selectionEnd = text.length;
     } else {
-        event.target.select();
+      event.target.select();
     }
   }
 
@@ -302,6 +302,7 @@ const mapStateToProps = (state, props) => {
       state.org.present.get('editMode') === 'title' &&
       state.org.present.get('selectedHeaderId') === props.header.get('id'),
     shouldTapTodoToAdvance: state.base.get('shouldTapTodoToAdvance'),
+    shouldDoubleTapToEdit: state.base.get('shouldDoubleTapToEdit'),
     isSelected: state.org.present.get('selectedHeaderId') === props.header.get('id'),
     todoKeywordSets: state.org.present.get('todoKeywordSets'),
   };

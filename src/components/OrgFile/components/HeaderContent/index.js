@@ -225,8 +225,10 @@ class HeaderContent extends PureComponent {
   }
 
   handleDoubleClick() {
+    if (this.props.shouldDoubleTapToEdit) {
       this.props.org.openHeader(this.props.header.get('id'));
       this.props.org.enterEditMode('description');
+    }
   }
 
   render() {
@@ -319,6 +321,7 @@ const mapStateToProps = (state, props) => {
     isSelected: state.org.present.get('selectedHeaderId') === props.header.get('id'),
     selectedTableCellId: state.org.present.get('selectedTableCellId'),
     inTableEditMode: state.org.present.get('editMode') === 'table',
+    shouldDoubleTapToEdit: state.base.get('shouldDoubleTapToEdit'),
   };
 };
 
