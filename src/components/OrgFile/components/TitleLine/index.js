@@ -32,6 +32,7 @@ class TitleLine extends PureComponent {
       'handleTodoClick',
       'handleTimestampClick',
       'handleInsertTimestamp',
+      'handleTitleDoubleClick',
     ]);
 
     this.state = {
@@ -57,6 +58,13 @@ class TitleLine extends PureComponent {
     if (prevProps.inEditMode && !this.props.inEditMode) {
       this.props.org.updateHeaderTitle(header.get('id'), this.state.titleValue);
     }
+
+    // if (!prevProps.inEditmode && this.props.inEditMode) {
+    //     const prevTitle = this.props.header.getIn('title', 'titleValue');
+    //     console.log(`titlestate before ${this.state.titleValue}`)
+    //     console.log('updating title into edit mode.');
+    //     this.textarea.select();
+    // }
 
     if (prevProps.header !== this.props.header) {
       this.setState(
@@ -98,6 +106,12 @@ class TitleLine extends PureComponent {
     }
   }
 
+  handleTitleDoubleClick() {
+    if (this.props.shouldDoubleTapToEdit) {
+      this.props.org.enterEditMode('title');
+    }
+  }
+
   handleTodoClick(event) {
     const { header, shouldTapTodoToAdvance, onClick } = this.props;
 
@@ -131,6 +145,8 @@ class TitleLine extends PureComponent {
       const text = event.target.value;
       event.target.selectionStart = text.length;
       event.target.selectionEnd = text.length;
+    } else {
+      event.target.select();
     }
   }
 
@@ -200,6 +216,7 @@ class TitleLine extends PureComponent {
       <div
         className="title-line"
         onClick={this.handleTitleClick}
+        onDoubleClick={this.handleTitleDoubleClick}
         ref={this.handleRef}
         style={{ width: shouldDisableExplicitWidth ? '' : containerWidth }}
       >
@@ -285,6 +302,7 @@ const mapStateToProps = (state, props) => {
       state.org.present.get('editMode') === 'title' &&
       state.org.present.get('selectedHeaderId') === props.header.get('id'),
     shouldTapTodoToAdvance: state.base.get('shouldTapTodoToAdvance'),
+    shouldDoubleTapToEdit: state.base.get('shouldDoubleTapToEdit'),
     isSelected: state.org.present.get('selectedHeaderId') === props.header.get('id'),
     todoKeywordSets: state.org.present.get('todoKeywordSets'),
   };
